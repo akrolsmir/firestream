@@ -18,12 +18,7 @@
   		}
       var time = snapshot.val().time;
   		if(snapshot.val().play == true){
-        if (time != prev_time){
-  		    play(time);
-          prev_time = time;
-        } else {
-          play();
-        }
+        play();
   		}else if(snapshot.val().play == false){
   		  if (time != prev_time){
           pause(time);

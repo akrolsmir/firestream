@@ -25,7 +25,7 @@ filepicker.setKey('AmCgE3LOTSRAi6q0Vlewrz');
   function send_pause_signal(){
     data.play = false;
     data.time = get_time() + latency;
-    //console.log(data.time);
+    console.log(data.time);
     myDataRef.set(data);
   }
   // var prev_time = 0;
@@ -74,7 +74,7 @@ filepicker.setKey('AmCgE3LOTSRAi6q0Vlewrz');
       pause: send_pause_signal,
       seeking: function(a){
         $(this).jPlayer("pause");
-        // update_time();
+        console.log("seeking ");
       },
       seek: function(a){
         console.log("seek ")

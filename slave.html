@@ -65,6 +65,11 @@
           player.jPlayer('pause');
       }
     }
+
+    function get_time(){
+      if(mp3_url != null)
+        return player.data("jPlayer").status.currentTime;
+    }
   </script>
 </head>
 <body>

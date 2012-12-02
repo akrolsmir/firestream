@@ -1,0 +1,79 @@
+<html>
+<head>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+  <script src="https://static.firebase.com/v0/firebase.js"></script>
+  <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+  <script type="text/javascript">
+
+    var player;
+    var mp3_url = null;
+    var prev_time = 0;
+  	var myDataReference = new Firebase('https://akrolsmir.firebaseio.com');
+
+    myDataReference.on('value', function(snapshot){
+      var song_url = snapshot.val().url;
+  		if(song_url != mp3_url){
+		    mp3_url = song_url;
+		    init(mp3_url);
+  		}
+      var time = snapshot.val().time;
+  		if(snapshot.val().play == true){
+        if (time != prev_time){
+  		    play(time);
+          prev_time = time;
+        } else {
+          play();
+        }
+  		}else if(snapshot.val().play == false){
+  		  if (time != prev_time){
+          pause(time);
+          prev_time = time;
+        } else {
+          pause();
+        }
+  		}
+    });
+
+    $(document).ready(function(){
+      player = $("#jplayer");
+      player.jPlayer({
+        ready: function() {
+          //??
+        }
+      });
+    });
+
+    function init(mp3_url, callback){
+      player.jPlayer("setMedia", {
+        mp3: mp3_url
+      });
+      player.jPlayer("load");
+
+      if(callback)
+        callback();
+    }
+
+    function play(optional_time){
+      if(mp3_url != null){
+        if(optional_time != null)
+          player.jPlayer('play', optional_time);
+        else
+          player.jPlayer('play');
+      }
+    }
+
+    function pause(optional_time){
+      if(mp3_url != null){	  
+        if(optional_time != null)
+          player.jPlayer('pause', optional_time);
+        else
+          player.jPlayer('pause');
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="jplayer"></div>
+  "Enjoy your music!"
+</body>
+</html>
